@@ -22,7 +22,11 @@ void Player::handleInput(float dt)
 		m_acceleration.x -= SPEED;
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::D))
 		m_acceleration.x += SPEED;
-
+	if (m_isOnGround && m_input->isKeyDown(sf::Keyboard::Scancode::W))
+	{
+		m_velocity.y -= JUMP_FORCE;
+		m_isOnGround = false;
+	}
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::R))	// Reset (for debugging)
 	{
 		setPosition({ 50,0 });
@@ -40,5 +44,9 @@ void Player::update(float dt)
 
 void Player::collisionResponse(GameObject& collider)
 {
-	
+	if (m_velocity.y > 0) {
+		m_velocity.y = 0;
+		setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+	}
+	m_isOnGround = true;
 }
