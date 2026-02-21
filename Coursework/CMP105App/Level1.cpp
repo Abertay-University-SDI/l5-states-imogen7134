@@ -13,6 +13,8 @@ Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
 	tile.setCollisionBox({ { 0,0 },tile.getSize() });
 	std::vector<GameObject> tileSet;
 
+	
+
 	for (int i = 0; i < num_cols * num_rows; i++)
 	{
 		int row = i / num_cols;
@@ -34,8 +36,8 @@ Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
 	tileSet.push_back(tile);
 
 	std::vector<int> tileMapLocations{
-		b,	b,	20,	b,	66,	b,	b,	b,	b,	112,
-		b,	21, 104,22,	22,23,	b,	b,	b,	131,
+		b,	b,	20,	b,	b,	b,	b,	b,	b,	b,
+		b,	21, 104,22,	22,23,	b,	b,	b,	b,
 		1,	142,142,142,142,142,3,	b,	81,	83
 	};
 	sf::Vector2u mapSize = { 10, 3 };
@@ -47,6 +49,20 @@ Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
 	m_tileMap.buildLevel();
 
 	m_player.setInput(&m_input);
+
+
+	if (!m_tileTexture.loadFromFile("gfx/tilemap.png"))
+		std::cerr << "Failed to find tiles";
+
+	m_flag.setTexture(&m_tileTexture);
+	m_flag.setTextureRect({ {11 * 19, 5 * 19}, {18,18} });
+	m_flag.setPosition({ 90 * 9,344 });
+	m_flag.setSize({ 36,36 });
+	m_switch.setTexture(&m_tileTexture);
+	m_switch.setTextureRect({ {6 * 19,3 * 19}, {18, 18} });
+	m_switch.setPosition({ 90 * 4, 254 });
+	m_switch.setSize({ 36,36 });
+
 }
 
 // handle user input
@@ -79,6 +95,8 @@ void Level1::render()
 {
 	beginDraw();
 	m_tileMap.render(m_window);
+	m_window.draw(m_flag);
+	m_window.draw(m_switch);
 	m_window.draw(m_player);
 	endDraw();
 }

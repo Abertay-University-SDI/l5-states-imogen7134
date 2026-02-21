@@ -39,14 +39,44 @@ void Player::update(float dt)
 	// newtonian model
 	m_acceleration.y += GRAVITY;
 	m_velocity += dt * m_acceleration;
+	m_oldPosition = getPosition();
 	move(m_velocity);
 }
 
 void Player::collisionResponse(GameObject& collider)
 {
-	if (m_velocity.y > 0) {
-		m_velocity.y = 0;
-		setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+	
+	sf::FloatRect playerController = getCollisionBox();
+	sf::FloatRect wallBounds = collider.getCollisionBox();
+	auto overlap = playerController.findIntersection(wallBounds);
+	if (!overlap) return;
+	
+
+	float oldBottom = m_oldPosition.y + playerController.size.y;
+	float tileTop = wallBounds.position.y;
+
+
+	if( oldBottom <= tileTop)
+	{ 
+		if (m_velocity.y > 0)
+		{
+			m_velocity.y = 0;
+			setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+			m_isOnGround = true;
+		}
 	}
-	m_isOnGround = true;
+	else
+	{
+		m_velocity.x *= -COEFF_RESTITUTION;
+		// getting stuck in wall prevention
+		if (playerController.position.x < wallBounds.position.x)
+		{
+			setPosition({ getPosition().x - overlap->size.x, getPosition().y });
+		}
+		else
+		{
+			setPosition({ getPosition().x + overlap->size.x, getPosition().y });
+		}
+	}
+	
 }
