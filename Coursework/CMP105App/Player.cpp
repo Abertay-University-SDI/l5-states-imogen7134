@@ -35,9 +35,10 @@ void Player::handleInput(float dt)
 
 	if (m_input->isPressed(sf::Keyboard::Scancode::F))
 	{
-		if ((m_pFlag->getPosition() - getPosition()).length() < INTERACTION_RANGE)
+		if (((m_pFlag->getPosition() - getPosition()).length() < INTERACTION_RANGE) && m_pSwitch->getState() == true)
 		{
-			std::cout << "flag interaction\n";
+			m_wantsGameToEnd = true;
+			std::cout << m_wantsGameToEnd << "\n";
 		}
 		if ((m_pSwitch->getPosition() - getPosition()).length() < INTERACTION_RANGE)
 		{

@@ -11,6 +11,8 @@ public:
     void collisionResponse(GameObject& collider) override;
     void setFlag(GameObject* flag) { m_pFlag = flag; };
     void setSwitch(Switch* pSwitch) { m_pSwitch = pSwitch; };
+    bool getWantGameOver() { return m_wantsGameToEnd; };
+    void setWantGameOver(bool isOver) { m_wantsGameToEnd = isOver; };
 private:
     sf::Texture m_texture;
     sf::Vector2f m_acceleration;
@@ -25,6 +27,7 @@ private:
     sf::Vector2f m_oldPosition;
     GameObject* m_pFlag;
     Switch* m_pSwitch;
+    bool m_wantsGameToEnd = false;
    
 };
 

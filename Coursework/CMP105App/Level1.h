@@ -28,5 +28,7 @@ private:
 	GameObject m_flag;
 	Switch m_switch;
 	
-
+	bool m_isPaused = false;
+	sf::Text m_pauseText;
+	sf::Font m_font;
 };

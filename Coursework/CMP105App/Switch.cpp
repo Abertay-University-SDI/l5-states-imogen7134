@@ -16,3 +16,16 @@ void Switch::toggle()
 	else setTextureRect(m_off);
 
 }
+
+void Switch::setState(bool state)
+{
+	m_isOn = state;
+	if (state == true)
+	{
+		setTextureRect(m_on);
+	}
+	else
+	{
+		setTextureRect(m_off);
+	}
+}
