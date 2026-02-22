@@ -32,6 +32,19 @@ void Player::handleInput(float dt)
 		setPosition({ 50,0 });
 		m_velocity = { 0,0 };
 	}
+
+	if (m_input->isPressed(sf::Keyboard::Scancode::F))
+	{
+		if ((m_pFlag->getPosition() - getPosition()).length() < INTERACTION_RANGE)
+		{
+			std::cout << "flag interaction\n";
+		}
+		if ((m_pSwitch->getPosition() - getPosition()).length() < INTERACTION_RANGE)
+		{
+			std::cout << "switch interaction\n";
+			m_pSwitch->toggle();
+		}
+	}
 }
 
 void Player::update(float dt)

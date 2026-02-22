@@ -63,6 +63,9 @@ Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
 	m_switch.setPosition({ 90 * 4, 254 });
 	m_switch.setSize({ 36,36 });
 
+	m_player.setFlag(&m_flag);
+	m_player.setSwitch(&m_switch);
+
 }
 
 // handle user input

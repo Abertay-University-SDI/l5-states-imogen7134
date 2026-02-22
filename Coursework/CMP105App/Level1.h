@@ -4,6 +4,7 @@
 #include "Framework/GameObject.h"
 #include "Framework/TileMap.h"
 #include "Player.h"
+#include "Switch.h"
 #include "Framework/Collision.h"
 
 class Level1 : BaseLevel {
@@ -25,7 +26,7 @@ private:
 
 	sf::Texture m_tileTexture;
 	GameObject m_flag;
-	GameObject m_switch;
+	Switch m_switch;
 	
 
 };
